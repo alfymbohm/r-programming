@@ -1,0 +1,404 @@
+
+R version 3.3.0 (2016-05-03) -- "Supposedly Educational"
+Copyright (C) 2016 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin13.4.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[R.app GUI 1.68 (7202) x86_64-apple-darwin13.4.0]
+
+[History restored from /Users/Alfy/.Rapp.history]
+
+> ls
+function (name, pos = -1L, envir = as.environment(pos), all.names = FALSE, 
+    pattern, sorted = TRUE) 
+{
+    if (!missing(name)) {
+        pos <- tryCatch(name, error = function(e) e)
+        if (inherits(pos, "error")) {
+            name <- substitute(name)
+            if (!is.character(name)) 
+                name <- deparse(name)
+            warning(gettextf("%s converted to character string", 
+                sQuote(name)), domain = NA)
+            pos <- name
+        }
+    }
+    all.names <- .Internal(ls(envir, all.names, sorted))
+    if (!missing(pattern)) {
+        if ((ll <- length(grep("[", pattern, fixed = TRUE))) && 
+            ll != length(grep("]", pattern, fixed = TRUE))) {
+            if (pattern == "[") {
+                pattern <- "\\["
+                warning("replaced regular expression pattern '[' by  '\\\\['")
+            }
+            else if (length(grep("[^\\\\]\\[<-", pattern))) {
+                pattern <- sub("\\[<-", "\\\\\\[<-", pattern)
+                warning("replaced '[<-' by '\\\\[<-' in regular expression pattern")
+            }
+        }
+        grep(pattern, all.names, value = TRUE)
+    }
+    else all.names
+}
+<bytecode: 0x7fdbab710008>
+<environment: namespace:base>
+> ls()
+character(0)
+> readLines("tokenize_tests.txt")
+Error in file(con, "r") : cannot open the connection
+In addition: Warning message:
+In file(con, "r") :
+  cannot open file 'tokenize_tests.txt': No such file or directory
+> getwd()
+[1] "/Users/Alfy"
+> setwd("/Users/Alfy/Documents/Data science/GitHub Repos/r-programming")
+> getwd()
+[1] "/Users/Alfy/Documents/Data science/GitHub Repos/r-programming"
+> readLines("tokenize_tests.txt")
+  [1] "# Tests for the 'tokenize' module."                                      
+  [2] "# Large bits stolen from test_grammar.py. "                              
+  [3] ""                                                                        
+  [4] "# Comments"                                                              
+  [5] "\"#\""                                                                   
+  [6] "#'"                                                                      
+  [7] "#\""                                                                     
+  [8] "#\\"                                                                     
+  [9] "       #"                                                                
+ [10] "    # abc"                                                               
+ [11] "'''#"                                                                    
+ [12] "#'''"                                                                    
+ [13] ""                                                                        
+ [14] "x = 1  #"                                                                
+ [15] ""                                                                        
+ [16] "# Balancing continuation"                                                
+ [17] ""                                                                        
+ [18] "a = (3, 4,"                                                              
+ [19] "  5, 6)"                                                                 
+ [20] "y = [3, 4,"                                                              
+ [21] "  5]"                                                                    
+ [22] "z = {'a':5,"                                                             
+ [23] "  'b':6}"                                                                
+ [24] "x = (len(`y`) + 5*x - a["                                                
+ [25] "   3 ]"                                                                  
+ [26] "   - x + len({"                                                          
+ [27] "   }"                                                                    
+ [28] "    )"                                                                   
+ [29] "  )"                                                                     
+ [30] ""                                                                        
+ [31] "# Backslash means line continuation:"                                    
+ [32] "x = 1 \\"                                                                
+ [33] "+ 1"                                                                     
+ [34] ""                                                                        
+ [35] "# Backslash does not means continuation in comments :\\"                 
+ [36] "x = 0"                                                                   
+ [37] ""                                                                        
+ [38] "# Ordinary integers"                                                     
+ [39] "0xff <> 255"                                                             
+ [40] "0377 <> 255"                                                             
+ [41] "2147483647   != 017777777777"                                            
+ [42] "-2147483647-1 != 020000000000"                                           
+ [43] "037777777777 != -1"                                                      
+ [44] "0xffffffff != -1"                                                        
+ [45] ""                                                                        
+ [46] "# Long integers"                                                         
+ [47] "x = 0L"                                                                  
+ [48] "x = 0l"                                                                  
+ [49] "x = 0xffffffffffffffffL"                                                 
+ [50] "x = 0xffffffffffffffffl"                                                 
+ [51] "x = 077777777777777777L"                                                 
+ [52] "x = 077777777777777777l"                                                 
+ [53] "x = 123456789012345678901234567890L"                                     
+ [54] "x = 123456789012345678901234567890l"                                     
+ [55] ""                                                                        
+ [56] "# Floating-point numbers"                                                
+ [57] "x = 3.14"                                                                
+ [58] "x = 314."                                                                
+ [59] "x = 0.314"                                                               
+ [60] "# XXX x = 000.314"                                                       
+ [61] "x = .314"                                                                
+ [62] "x = 3e14"                                                                
+ [63] "x = 3E14"                                                                
+ [64] "x = 3e-14"                                                               
+ [65] "x = 3e+14"                                                               
+ [66] "x = 3.e14"                                                               
+ [67] "x = .3e14"                                                               
+ [68] "x = 3.1e4"                                                               
+ [69] ""                                                                        
+ [70] "# String literals"                                                       
+ [71] "x = ''; y = \"\";"                                                       
+ [72] "x = '\\''; y = \"'\";"                                                   
+ [73] "x = '\"'; y = \"\\\"\";"                                                 
+ [74] "x = \"doesn't \\\"shrink\\\" does it\""                                  
+ [75] "y = 'doesn\\'t \"shrink\" does it'"                                      
+ [76] "x = \"does \\\"shrink\\\" doesn't it\""                                  
+ [77] "y = 'does \"shrink\" doesn\\'t it'"                                      
+ [78] "x = \"\"\""                                                              
+ [79] "The \"quick\""                                                           
+ [80] "brown fox"                                                               
+ [81] "jumps over"                                                              
+ [82] "the 'lazy' dog."                                                         
+ [83] "\"\"\""                                                                  
+ [84] "y = '\\nThe \"quick\"\\nbrown fox\\njumps over\\nthe \\'lazy\\' dog.\\n'"
+ [85] "y = '''"                                                                 
+ [86] "The \"quick\""                                                           
+ [87] "brown fox"                                                               
+ [88] "jumps over"                                                              
+ [89] "the 'lazy' dog."                                                         
+ [90] "''';"                                                                    
+ [91] "y = \"\\n\\"                                                             
+ [92] "The \\\"quick\\\"\\n\\"                                                  
+ [93] "brown fox\\n\\"                                                          
+ [94] "jumps over\\n\\"                                                         
+ [95] "the 'lazy' dog.\\n\\"                                                    
+ [96] "\";"                                                                     
+ [97] "y = '\\n\\"                                                              
+ [98] "The \\\"quick\\\"\\n\\"                                                  
+ [99] "brown fox\\n\\"                                                          
+[100] "jumps over\\n\\"                                                         
+[101] "the \\'lazy\\' dog.\\n\\"                                                
+[102] "';"                                                                      
+[103] "x = r'\\\\' + R'\\\\'"                                                   
+[104] "x = r'\\'' + ''"                                                         
+[105] "y = r'''"                                                                
+[106] "foo bar \\\\"                                                            
+[107] "baz''' + R'''"                                                           
+[108] "foo'''"                                                                  
+[109] "y = r\"\"\"foo"                                                          
+[110] "bar \\\\ baz"                                                            
+[111] "\"\"\" + R'''spam"                                                       
+[112] "'''"                                                                     
+[113] "x = u'abc' + U'ABC'"                                                     
+[114] "y = u\"abc\" + U\"ABC\""                                                 
+[115] "x = ur'abc' + Ur'ABC' + uR'ABC' + UR'ABC'"                               
+[116] "y = ur\"abc\" + Ur\"ABC\" + uR\"ABC\" + UR\"ABC\""                       
+[117] "x = ur'\\\\' + UR'\\\\'"                                                 
+[118] "x = ur'\\'' + ''"                                                        
+[119] "y = ur'''"                                                               
+[120] "foo bar \\\\"                                                            
+[121] "baz''' + UR'''"                                                          
+[122] "foo'''"                                                                  
+[123] "y = Ur\"\"\"foo"                                                         
+[124] "bar \\\\ baz"                                                            
+[125] "\"\"\" + uR'''spam"                                                      
+[126] "'''"                                                                     
+[127] ""                                                                        
+[128] "# Indentation"                                                           
+[129] "if 1:"                                                                   
+[130] "    x = 2"                                                               
+[131] "if 1:"                                                                   
+[132] "        x = 2"                                                           
+[133] "if 1:"                                                                   
+[134] "    while 0:"                                                            
+[135] "     if 0:"                                                              
+[136] "           x = 2"                                                        
+[137] "     x = 2"                                                              
+[138] "if 0:"                                                                   
+[139] "  if 2:"                                                                 
+[140] "   while 0:"                                                             
+[141] "        if 1:"                                                           
+[142] "          x = 2"                                                         
+[143] ""                                                                        
+[144] "# Operators"                                                             
+[145] ""                                                                        
+[146] "def d22(a, b, c=1, d=2): pass"                                           
+[147] "def d01v(a=1, *restt, **restd): pass"                                    
+[148] ""                                                                        
+[149] "(x, y) <> ({'a':1}, {'b':2})"                                            
+[150] ""                                                                        
+[151] "# comparison"                                                            
+[152] "if 1 < 1 > 1 == 1 >= 1 <= 1 <> 1 != 1 in 1 not in 1 is 1 is not 1: pass" 
+[153] ""                                                                        
+[154] "# binary"                                                                
+[155] "x = 1 & 1"                                                               
+[156] "x = 1 ^ 1"                                                               
+[157] "x = 1 | 1"                                                               
+[158] ""                                                                        
+[159] "# shift"                                                                 
+[160] "x = 1 << 1 >> 1"                                                         
+[161] ""                                                                        
+[162] "# additive"                                                              
+[163] "x = 1 - 1 + 1 - 1 + 1"                                                   
+[164] ""                                                                        
+[165] "# multiplicative"                                                        
+[166] "x = 1 / 1 * 1 % 1"                                                       
+[167] ""                                                                        
+[168] "# unary"                                                                 
+[169] "x = ~1 ^ 1 & 1 | 1 & 1 ^ -1"                                             
+[170] "x = -1*1/1 + 1*1 - ---1*1"                                               
+[171] ""                                                                        
+[172] "# selector"                                                              
+[173] "import sys, time"                                                        
+[174] "x = sys.modules['time'].time()"                                          
+[175] ""                                                                        
+[176] "@staticmethod"                                                           
+[177] "def foo(): pass"                                                         
+[178] ""                                                                        
+> x<-readLines("myFunction.r")
+Warning message:
+In readLines("myFunction.r") :
+  incomplete final line found on 'myFunction.r'
+> x
+[1] "myFunction <- function () {"                                
+[2] ""                                                           
+[3] "\tx<-rnorm(100)"                                            
+[4] "\tmean(x)"                                                  
+[5] ""                                                           
+[6] "}"                                                          
+[7] "secondF <- function(x) {"                                   
+[8] "\tlist(x + rnorm(length(x)),paste(\"length(x)\",length(x)))"
+[9] "}"                                                          
+> y <- read.table("tab-separated.txt" sep="\t")
+Error: unexpected symbol in "y <- read.table("tab-separated.txt" sep"
+> y <- read.table("tab-separated.txt" sep="/t")
+Error: unexpected symbol in "y <- read.table("tab-separated.txt" sep"
+> h
+> ls
+function (name, pos = -1L, envir = as.environment(pos), all.names = FALSE, 
+    pattern, sorted = TRUE) 
+{
+    if (!missing(name)) {
+        pos <- tryCatch(name, error = function(e) e)
+        if (inherits(pos, "error")) {
+            name <- substitute(name)
+            if (!is.character(name)) 
+                name <- deparse(name)
+            warning(gettextf("%s converted to character string", 
+                sQuote(name)), domain = NA)
+            pos <- name
+        }
+    }
+    all.names <- .Internal(ls(envir, all.names, sorted))
+    if (!missing(pattern)) {
+        if ((ll <- length(grep("[", pattern, fixed = TRUE))) && 
+            ll != length(grep("]", pattern, fixed = TRUE))) {
+            if (pattern == "[") {
+                pattern <- "\\["
+                warning("replaced regular expression pattern '[' by  '\\\\['")
+            }
+            else if (length(grep("[^\\\\]\\[<-", pattern))) {
+                pattern <- sub("\\[<-", "\\\\\\[<-", pattern)
+                warning("replaced '[<-' by '\\\\[<-' in regular expression pattern")
+            }
+        }
+        grep(pattern, all.names, value = TRUE)
+    }
+    else all.names
+}
+<bytecode: 0x7fdbab710008>
+<environment: namespace:base>
+> ls()
+[1] "x"
+> dir()
+[1] "EU-referendum-result-data.csv" "myFunction.r"                 
+[3] "tab-separated.rtf"             "tokenize_tests.txt"           
+> y <- read.table("tab-separated.rtf" sep="/t")
+Error: unexpected symbol in "y <- read.table("tab-separated.rtf" sep"
+> y <- read.table("tab-separated.rtf" sep="\t")
+Error: unexpected symbol in "y <- read.table("tab-separated.rtf" sep"
+> dir()
+[1] "EU-referendum-result-data.csv" "myFunction.r"                 
+[3] "tab-separated.txt"             "tokenize_tests.txt"           
+> y <- read.table("tab-separated.txt" sep="\t")
+Error: unexpected symbol in "y <- read.table("tab-separated.txt" sep"
+> y <- read.table("tab-separated.txt" sep="/t")
+Error: unexpected symbol in "y <- read.table("tab-separated.txt" sep"
+> y <- read.table("tab-separated.txt" sep="\t")
+Error: unexpected symbol in "y <- read.table("tab-separated.txt" sep"
+> y <- read.table("tab-separated.txt" sep = "\t")
+Error: unexpected symbol in "y <- read.table("tab-separated.txt" sep"
+> y <- read.table("tab-separated.txt", sep = "\t")
+Warning message:
+In read.table("tab-separated.txt", sep = "\t") :
+  incomplete final line found by readTableHeader on 'tab-separated.txt'
+> y
+   V1 V2        V3
+1 you me everybody
+2   1  2         3
+3   4  5         6
+4   7  8         9
+> y <- read.table("tab-separated.txt", sep = "\t")
+Warning message:
+In read.table("tab-separated.txt", sep = "\t") :
+  incomplete final line found by readTableHeader on 'tab-separated.txt'
+> y
+   V1 V2        V3
+1 you me everybody
+2   1  2         3
+3   4  5         6
+4   7  8         9
+> y <- read.table("tab-separated.txt", sep = "\t", commentChar ="£")
+Error in read.table("tab-separated.txt", sep = "\t", commentChar = "£") : 
+  unused argument (commentChar = "£")
+> y
+   V1 V2        V3
+1 you me everybody
+2   1  2         3
+3   4  5         6
+4   7  8         9
+> y <- read.table("tab-separated.txt", sep = "\t")
+Warning message:
+In read.table("tab-separated.txt", sep = "\t") :
+  incomplete final line found by readTableHeader on 'tab-separated.txt'
+> y
+   V1 V2                  V3
+1 you me           everybody
+2   1  2 3£ your mamma blows
+3   4  5                   6
+4   7  8                   9
+> y <- read.table("tab-separated.txt", sep = "\t", commentChar ="£")
+Error in read.table("tab-separated.txt", sep = "\t", commentChar = "£") : 
+  unused argument (commentChar = "£")
+> y
+   V1 V2                  V3
+1 you me           everybody
+2   1  2 3£ your mamma blows
+3   4  5                   6
+4   7  8                   9
+> y
+   V1 V2                  V3
+1 you me           everybody
+2   1  2 3£ your mamma blows
+3   4  5                   6
+4   7  8                   9
+> y <- read.table("tab-separated.txt", sep = "\t", commentChar ="£")
+Error in read.table("tab-separated.txt", sep = "\t", commentChar = "£") : 
+  unused argument (commentChar = "£")
+> 
+> y
+   V1 V2                  V3
+1 you me           everybody
+2   1  2 3£ your mamma blows
+3   4  5                   6
+4   7  8                   9
+> y <- read.table("tab-separated.txt", sep = "\t", commentChar ="£")
+Error in read.table("tab-separated.txt", sep = "\t", commentChar = "£") : 
+  unused argument (commentChar = "£")
+> y
+   V1 V2                  V3
+1 you me           everybody
+2   1  2 3£ your mamma blows
+3   4  5                   6
+4   7  8                   9
+> y <- read.table("tab-separated.txt", sep = "\t", commentChar ="%")
+Error in read.table("tab-separated.txt", sep = "\t", commentChar = "%") : 
+  unused argument (commentChar = "%")
+> y
+   V1 V2                  V3
+1 you me           everybody
+2   1  2 3£ your mamma blows
+3   4  5                   6
+4   7  8                   9
+> 
